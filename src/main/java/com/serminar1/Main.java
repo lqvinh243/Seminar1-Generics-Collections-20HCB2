@@ -25,30 +25,6 @@ public class Main {
 
     static Stack<String> his = new Stack<>();
 
-    public static TreeMap<String, ArrayList<String>> ReadSlagWork() {
-        TreeMap<String, ArrayList<String>> map = new TreeMap<String, ArrayList<String>>();
-        try {
-            File myObj = new File("slang.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] arrOfStr = data.split("`", 2);
-                if (arrOfStr.length < 2) {
-                    continue;
-                }
-                String lang = arrOfStr[1];
-                String[] g = lang.split("\\|");
-                map.put(arrOfStr[0], new ArrayList<String>(Arrays.asList(g)));
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        return map;
-    }
-
     public static ArrayList<String> findBySlagWord(TreeMap<String, ArrayList<String>> map, String slagWord) {
         his.push(slagWord);
         return map.get(slagWord);
@@ -108,9 +84,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        TreeMap<String, ArrayList<String>> map = ReadSlagWork();
+        SlagWord slag = new SlagWord();
+        slag.ReadSlagWordFromFile();
+        slag.PrintList();
         long startTime = System.nanoTime();
-        deleteSlagWord(map);
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);
