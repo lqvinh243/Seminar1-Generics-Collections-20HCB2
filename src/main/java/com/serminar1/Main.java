@@ -27,10 +27,6 @@ public class Main {
         return map.get(slagWord);
     }
 
-    
-
-    
-
     public static void randomMap(TreeMap<String, ArrayList<String>> map) {
         Set<String> keySet = map.keySet();
         List<String> keyList = new ArrayList<>(keySet);
@@ -72,8 +68,11 @@ public class Main {
         slag.ReadSlagWordFromFile();
 //        slag.GetBySlagWord();
         long startTime = System.nanoTime();
-        slag.AddNewSlagWord();
-        slag.GetBySlagWord();
+//        slag.AddNewSlagWord();
+        slag.GetBySlagWord("&");
+        slag.EditSlagWord();
+        slag.GetBySlagWord("&");
+        slag.GetBySlagWord("&&");
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);

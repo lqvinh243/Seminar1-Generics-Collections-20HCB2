@@ -12,7 +12,8 @@ package com.serminar1;
 public interface ISlagWord {
     public void ReadSlagWordFromFile();
     public void PrintList();
-    public void GetBySlagWord();
+    public void GetBySlagWord(String SlagWord);
     public void FindSlagWordByDefinition();
     public void AddNewSlagWord();
+    public void EditSlagWord();
 }
