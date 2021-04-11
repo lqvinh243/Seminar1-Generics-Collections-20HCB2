@@ -12,4 +12,5 @@ package com.serminar1;
 public interface ISlagWord {
     public void ReadSlagWordFromFile();
     public void PrintList();
+    public void GetBykey();
 }

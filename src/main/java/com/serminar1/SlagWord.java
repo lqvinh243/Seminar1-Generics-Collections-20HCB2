@@ -7,8 +7,6 @@ package com.serminar1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -48,6 +46,19 @@ public class SlagWord implements ISlagWord {
     public void PrintList() {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             System.out.println("Key: " + entry.getKey() + ". Value: " + entry.getValue());
+        }
+    }
+
+    @Override
+    public void GetBykey() {
+        System.out.println("Nhap key can lay:");
+        String key = Helper.scan.nextLine();
+        if(map.containsKey(key)){
+            System.out.println("Slag word tim duoc la : ");
+            System.out.println(map.get(key));
+        }
+        else {
+            System.out.println("Khong ton tai slag word nay!");
         }
     }
 

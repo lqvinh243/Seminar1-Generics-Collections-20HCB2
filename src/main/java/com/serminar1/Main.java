@@ -86,7 +86,7 @@ public class Main {
     public static void main(String[] args) {
         SlagWord slag = new SlagWord();
         slag.ReadSlagWordFromFile();
-        slag.PrintList();
+        slag.GetBykey();
         long startTime = System.nanoTime();
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
