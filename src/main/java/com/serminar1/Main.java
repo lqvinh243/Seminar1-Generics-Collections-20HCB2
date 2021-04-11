@@ -5,10 +5,7 @@
  */
 package com.serminar1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -30,22 +27,9 @@ public class Main {
         return map.get(slagWord);
     }
 
-    public static void findByDefinition(TreeMap<String, ArrayList<String>> map, String slagWord) {
-        for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
-            if (useLoop(entry.getValue(), slagWord)) {
-                System.out.println(entry.getKey());
-            }
-        }
-    }
+    
 
-    public static boolean useLoop(ArrayList<String> arr, String targetValue) {
-        for (String s : arr) {
-            if (s.contains(targetValue)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
 
     public static void randomMap(TreeMap<String, ArrayList<String>> map) {
         Set<String> keySet = map.keySet();
@@ -86,8 +70,10 @@ public class Main {
     public static void main(String[] args) {
         SlagWord slag = new SlagWord();
         slag.ReadSlagWordFromFile();
-        slag.GetBykey();
+//        slag.GetBySlagWord();
         long startTime = System.nanoTime();
+        slag.AddNewSlagWord();
+        slag.GetBySlagWord();
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);
