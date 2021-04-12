@@ -7,7 +7,11 @@ package com.serminar1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -15,12 +19,13 @@ import java.util.TreeMap;
  *
  * @author lqvin
  */
-public class SlagWord implements ISlagWord {
+public final class SlagWord implements ISlagWord {
 
     private TreeMap<String, String> map;
 
     public SlagWord() {
         map = new TreeMap<>();
+        ReadSlagWordFromFile();
     }
 
     @Override
@@ -139,5 +144,69 @@ public class SlagWord implements ISlagWord {
                     break;
             }
         }
+    }
+
+    @Override
+    public void DeleteSlagWord() {
+        System.out.println("Nhap slag word can xoa : ");
+        String SlagWord = Helper.scan.nextLine();
+        if (map.containsKey(SlagWord) == false) {
+            System.out.println("Khong ton tai slag word nay!");
+        } else {
+            System.out.println("Ban co chac chan muon xoa tu nay?");
+            System.out.println("1.Xoa ngay");
+            System.out.println("2.Huy");
+            String choice = Helper.scan.nextLine();
+            switch (choice) {
+                case "1":
+                    map.remove(SlagWord);
+                    break;
+                case "2":
+                    break;
+                default:
+                    System.out.println("Khong tim thay lua chon!!");
+            }
+        }
+
+    }
+
+    @Override
+    public void Reset() {
+        ReadSlagWordFromFile();
+    }
+
+    @Override
+    public void QuizOne() {
+        List<String> answers = new ArrayList<String>();
+        String correctAnswer;
+        System.out.println("Chao mung ban den voi game show!!");
+        System.out.println("Chon definition dung cho slag word sau : ");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        correctAnswer = map.get(randomKey);
+        answers.add(correctAnswer);
+        for (int i = 0; i < 3; i++) {
+            numberRd = generator.nextInt(numberRd);
+            answers.add(map.get(key[numberRd].toString()));
+        }
+        Collections.shuffle(answers);
+        System.out.println("Slag word : " + randomKey);
+        for (int i = 0; i < answers.size(); i++) {
+            System.out.println(i + 1 + " " + answers.get(i));
+        }
+        String choice = Helper.scan.nextLine();
+        
+        try {
+            if (answers.get(Integer.parseInt(choice) - 1).equals(correctAnswer)) {
+                System.out.println("Toe toe !! Chuc mung ban da tra loi dung");
+            } else {
+                System.out.println("Chia buon cung ban da tra loi sai!");
+            }
+        } catch (Exception e) {
+            System.out.println("Chia buon cung ban da tra loi sai!");
+        }
+
     }
 }

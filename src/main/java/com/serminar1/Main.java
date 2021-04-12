@@ -65,14 +65,15 @@ public class Main {
 
     public static void main(String[] args) {
         SlagWord slag = new SlagWord();
-        slag.ReadSlagWordFromFile();
+//        slag.ReadSlagWordFromFile();
 //        slag.GetBySlagWord();
         long startTime = System.nanoTime();
 //        slag.AddNewSlagWord();
-        slag.GetBySlagWord("&");
-        slag.EditSlagWord();
-        slag.GetBySlagWord("&");
-        slag.GetBySlagWord("&&");
+//        slag.GetBySlagWord("&");
+          slag.QuizOne();
+//        slag.EditSlagWord();
+//        slag.GetBySlagWord("&");
+//        slag.GetBySlagWord("&&");
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);

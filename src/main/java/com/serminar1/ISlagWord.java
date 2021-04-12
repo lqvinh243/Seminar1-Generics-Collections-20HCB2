@@ -16,4 +16,7 @@ public interface ISlagWord {
     public void FindSlagWordByDefinition();
     public void AddNewSlagWord();
     public void EditSlagWord();
+    public void DeleteSlagWord();
+    public void Reset();
+    public void QuizOne();
 }
