@@ -70,7 +70,7 @@ public class Main {
         long startTime = System.nanoTime();
 //        slag.AddNewSlagWord();
 //        slag.GetBySlagWord("&");
-          slag.QuizOne();
+          slag.QuizTwo();
 //        slag.EditSlagWord();
 //        slag.GetBySlagWord("&");
 //        slag.GetBySlagWord("&&");

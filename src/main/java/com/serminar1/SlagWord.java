@@ -207,6 +207,39 @@ public final class SlagWord implements ISlagWord {
         } catch (Exception e) {
             System.out.println("Chia buon cung ban da tra loi sai!");
         }
+    }
 
+    @Override
+    public void QuizTwo() {
+        List<String> answers = new ArrayList<String>();
+        String correctAnswer;
+        System.out.println("Chao mung ban den voi game show!!");
+        System.out.println("Chon slag word dung cho definition sau : ");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        correctAnswer = randomKey;
+        answers.add(correctAnswer);
+        for (int i = 0; i < 3; i++) {
+            numberRd = generator.nextInt(numberRd);
+            answers.add(key[numberRd].toString());
+        }
+        Collections.shuffle(answers);
+        System.out.println("Definition : " + map.get(randomKey));
+        for (int i = 0; i < answers.size(); i++) {
+            System.out.println(i + 1 + " " + answers.get(i));
+        }
+        String choice = Helper.scan.nextLine();
+        
+        try {
+            if (answers.get(Integer.parseInt(choice) - 1).equals(correctAnswer)) {
+                System.out.println("Toe toe !! Chuc mung ban da tra loi dung");
+            } else {
+                System.out.println("Chia buon cung ban da tra loi sai!");
+            }
+        } catch (Exception e) {
+            System.out.println("Chia buon cung ban da tra loi sai!");
+        }
     }
 }

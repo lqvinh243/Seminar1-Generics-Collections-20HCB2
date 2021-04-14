@@ -19,4 +19,5 @@ public interface ISlagWord {
     public void DeleteSlagWord();
     public void Reset();
     public void QuizOne();
+    public void QuizTwo();
 }
