@@ -20,4 +20,5 @@ public interface ISlagWord {
     public void Reset();
     public void QuizOne();
     public void QuizTwo();
+    public void Menu();
 }

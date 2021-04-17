@@ -197,7 +197,7 @@ public final class SlagWord implements ISlagWord {
             System.out.println(i + 1 + " " + answers.get(i));
         }
         String choice = Helper.scan.nextLine();
-        
+
         try {
             if (answers.get(Integer.parseInt(choice) - 1).equals(correctAnswer)) {
                 System.out.println("Toe toe !! Chuc mung ban da tra loi dung");
@@ -231,7 +231,7 @@ public final class SlagWord implements ISlagWord {
             System.out.println(i + 1 + " " + answers.get(i));
         }
         String choice = Helper.scan.nextLine();
-        
+
         try {
             if (answers.get(Integer.parseInt(choice) - 1).equals(correctAnswer)) {
                 System.out.println("Toe toe !! Chuc mung ban da tra loi dung");
@@ -241,5 +241,40 @@ public final class SlagWord implements ISlagWord {
         } catch (Exception e) {
             System.out.println("Chia buon cung ban da tra loi sai!");
         }
+    }
+
+    @Override
+    public void Menu() {
+        System.out.println("Xin chao ban den voi chuong truong trinht thao tac voi slag word!!");
+        String choose;
+        do {
+            System.out.println("Cac chuc nang chinh co trong chuong trinh : ");
+            System.out.println("0.Thoat chuong trinh!");
+            System.out.println("1.Tim kiem theo slag word!");
+            System.out.println("2.Tim kiem theo definition!");
+            System.out.println("3.Hien thi history slag word da tim kiem!");
+            System.out.println("4.Chuc nang them mot slag word moi!");
+            System.out.println("5.Chuc nang chinh sua slag word!");
+            System.out.println("6.Chuc nang delete slag word");
+            System.out.println("7.Chuc nang reset slag word goc!");
+            System.out.println("8.Chuc nang random slag word!");
+            System.out.println("9.Quiz game, hien thi slag word, tim definition chinh xac!!");
+            System.out.println("10.Quiz game, hien thi definition, tim slag word chinh xac!! ");
+            System.out.println("Chon chuc nang:");
+            choose = Helper.scan.nextLine();
+            switch (choose) {
+                case "0":
+                    break;
+                case "1":
+                    System.out.println("Nhap slag word can lay : ");
+                    String SlagWord = Helper.scan.nextLine();
+                    this.GetBySlagWord(SlagWord);
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                default:
+                    System.out.println("Khong ton tai chuc nang nay!!");
+                    Helper.pressAnyKeyToContinue();
+            }
+        } while (choose.compareTo("0") != 0);
     }
 }

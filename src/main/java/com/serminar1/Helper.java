@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author lqvin
  */
 public class Helper {
-    private static void pressAnyKeyToContinue() {
+    public static void pressAnyKeyToContinue() {
         System.out.println("Press Enter key to continue...");
         try {
             System.in.read();
