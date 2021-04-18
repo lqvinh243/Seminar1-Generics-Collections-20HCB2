@@ -7,6 +7,8 @@ package com.serminar1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +32,41 @@ public final class SlagWord implements ISlagWord {
     public SlagWord() {
         map = new TreeMap<>();
         historyStack = new Stack();
-        ReadSlagWordFromFile();
+        if (ReadDataSlagWordSave() == false) {
+            ReadSlagWordFromFile();
+        }
+    }
+
+    public void writeFile2() throws IOException {
+        FileWriter fw = new FileWriter("myslagword.txt");
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
+        }
+        fw.close();
+    }
+
+    @Override
+    public boolean ReadDataSlagWordSave() {
+        try {
+            File myObj = new File("myslagword.txt");
+            try (Scanner myReader = new Scanner(myObj)) {
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    String[] arrOfStr = data.split("`", 2);
+                    if (arrOfStr.length < 2) {
+                        continue;
+                    }
+
+                    map.put(arrOfStr[0].trim(), arrOfStr[1].trim());
+                }
+
+                return true;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+        return false;
     }
 
     @Override
@@ -42,7 +80,7 @@ public final class SlagWord implements ISlagWord {
                     if (arrOfStr.length < 2) {
                         continue;
                     }
-                    map.put(arrOfStr[0], arrOfStr[1]);
+                    map.put(arrOfStr[0].trim(), arrOfStr[1].trim());
                 }
             }
         } catch (FileNotFoundException e) {
@@ -176,6 +214,7 @@ public final class SlagWord implements ISlagWord {
             switch (choice) {
                 case "1":
                     map.remove(SlagWord);
+                    System.out.println("Xoa slag word thanh cong!");
                     break;
                 case "2":
                     break;
@@ -188,6 +227,7 @@ public final class SlagWord implements ISlagWord {
 
     @Override
     public void Reset() {
+        this.map.clear();
         ReadSlagWordFromFile();
     }
 
@@ -320,6 +360,7 @@ public final class SlagWord implements ISlagWord {
                     break;
                 case "7":
                     this.Reset();
+                    System.out.println("Reset ve slag word goc thanh cong!!");
                     Helper.pressAnyKeyToContinue();
                     break;
                 case "8":
@@ -339,5 +380,10 @@ public final class SlagWord implements ISlagWord {
                     Helper.pressAnyKeyToContinue();
             }
         } while (choose.compareTo("0") != 0);
+        try {
+            writeFile2();
+        } catch (IOException ex) {
+        }
     }
+
 }

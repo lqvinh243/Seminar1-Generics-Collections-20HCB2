@@ -10,6 +10,7 @@ package com.serminar1;
  * @author lqvin
  */
 public interface ISlagWord {
+    public boolean ReadDataSlagWordSave();
     public void ReadSlagWordFromFile();
     public void PrintList();
     public void GetBySlagWord(String SlagWord);
