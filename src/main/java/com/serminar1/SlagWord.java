@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -22,9 +23,11 @@ import java.util.TreeMap;
 public final class SlagWord implements ISlagWord {
 
     private TreeMap<String, String> map;
+    private final Stack<String> historyStack;
 
     public SlagWord() {
         map = new TreeMap<>();
+        historyStack = new Stack();
         ReadSlagWordFromFile();
     }
 
@@ -47,6 +50,18 @@ public final class SlagWord implements ISlagWord {
         }
     }
 
+    public void ShowHistory() {
+        System.out.println("Danh sach cac slag word da tim sap xep theo moi nhat:");
+        int count = 0;
+        for (int i = this.historyStack.size() - 1; i >= 0; i--) {
+            System.out.println(this.historyStack.get(i));
+            count++;
+            if (count == 10) {
+                break;
+            }
+        }
+    }
+
     @Override
     public void PrintList() {
         for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -56,6 +71,7 @@ public final class SlagWord implements ISlagWord {
 
     @Override
     public void GetBySlagWord(String SlagWord) {
+        historyStack.push(SlagWord);
         if (map.containsKey(SlagWord)) {
             System.out.println("Slag word tim duoc la : ");
             System.out.println(map.get(SlagWord));
@@ -176,6 +192,17 @@ public final class SlagWord implements ISlagWord {
     }
 
     @Override
+    public void RandomSlagWord() {
+        System.out.println("Random slag word :");
+        Random generator = new Random();
+        Object[] key = map.keySet().toArray();
+        int numberRd = generator.nextInt(key.length);
+        String randomKey = key[numberRd].toString();
+        System.out.println("Key : " + randomKey);
+        System.out.println("Definition : " + map.get(randomKey));
+    }
+
+    @Override
     public void QuizOne() {
         List<String> answers = new ArrayList<String>();
         String correctAnswer;
@@ -269,6 +296,42 @@ public final class SlagWord implements ISlagWord {
                     System.out.println("Nhap slag word can lay : ");
                     String SlagWord = Helper.scan.nextLine();
                     this.GetBySlagWord(SlagWord);
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "2":
+                    this.FindSlagWordByDefinition();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "3":
+                    this.ShowHistory();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "4":
+                    this.AddNewSlagWord();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "5":
+                    this.EditSlagWord();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "6":
+                    this.DeleteSlagWord();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "7":
+                    this.Reset();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "8":
+                    this.RandomSlagWord();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "9":
+                    this.QuizOne();
+                    Helper.pressAnyKeyToContinue();
+                    break;
+                case "10":
+                    this.QuizTwo();
                     Helper.pressAnyKeyToContinue();
                     break;
                 default:
