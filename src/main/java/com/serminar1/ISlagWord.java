@@ -5,22 +5,37 @@
  */
 package com.serminar1;
 
+import java.io.InputStream;
+
 /**
  *
  * @author lqvin
  */
 public interface ISlagWord {
+
     public boolean ReadDataSlagWordSave();
-    public void ReadSlagWordFromFile();
+
+    public void ReadSlagWordFromFile(String fileName);
+
     public void PrintList();
+
     public void GetBySlagWord(String SlagWord);
+
     public void FindSlagWordByDefinition();
+
     public void AddNewSlagWord();
+
     public void EditSlagWord();
+
     public void DeleteSlagWord();
+
     public void Reset();
+
     public void RandomSlagWord();
+
     public void QuizOne();
+
     public void QuizTwo();
+
     public void Menu();
 }

@@ -15,7 +15,7 @@ public class Helper {
     public static void pressAnyKeyToContinue() {
         System.out.println("Press Enter key to continue...");
         try {
-            System.in.read();
+            Helper.scan.nextLine();
         } catch (Exception e) {
         }
     }

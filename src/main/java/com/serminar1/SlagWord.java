@@ -5,10 +5,16 @@
  */
 package com.serminar1;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,26 +30,27 @@ import java.util.logging.Logger;
  *
  * @author lqvin
  */
+@SuppressWarnings("unchecked")
 public final class SlagWord implements ISlagWord {
 
-    private TreeMap<String, String> map;
+    private final TreeMap<String, String> map;
     private final Stack<String> historyStack;
+    private final String fileName = "txt/slang.txt";
 
     public SlagWord() {
         map = new TreeMap<>();
         historyStack = new Stack();
         if (ReadDataSlagWordSave() == false) {
-            ReadSlagWordFromFile();
+            ReadSlagWordFromFile(fileName);
         }
     }
 
     public void writeFile2() throws IOException {
-        FileWriter fw = new FileWriter("myslagword.txt");
-
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
+        try (FileWriter fw = new FileWriter("myslagword.txt")) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                fw.write(entry.getKey() + "`" + entry.getValue() + "\n");
+            }
         }
-        fw.close();
     }
 
     @Override
@@ -57,34 +64,41 @@ public final class SlagWord implements ISlagWord {
                     if (arrOfStr.length < 2) {
                         continue;
                     }
-
                     map.put(arrOfStr[0].trim(), arrOfStr[1].trim());
                 }
-
                 return true;
             }
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
         }
         return false;
     }
 
+    private InputStream getFileFromResourceAsStream(String fileName) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+        // the stream holding the file content
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
+        }
+    }
+
     @Override
-    public void ReadSlagWordFromFile() {
-        try {
-            File myObj = new File("slang.txt");
-            try (Scanner myReader = new Scanner(myObj)) {
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
-                    String[] arrOfStr = data.split("`", 2);
-                    if (arrOfStr.length < 2) {
-                        continue;
-                    }
-                    map.put(arrOfStr[0].trim(), arrOfStr[1].trim());
+    public void ReadSlagWordFromFile(String fileName) {
+        InputStream is = getFileFromResourceAsStream(fileName);
+        try (InputStreamReader streamReader
+                = new InputStreamReader(is, StandardCharsets.UTF_8); BufferedReader reader = new BufferedReader(streamReader)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] arrOfStr = line.split("`", 2);
+                if (arrOfStr.length < 2) {
+                    continue;
                 }
+                map.put(arrOfStr[0].trim(), arrOfStr[1].trim());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -122,11 +136,9 @@ public final class SlagWord implements ISlagWord {
     public void FindSlagWordByDefinition() {
         System.out.println("Nhap definiton: ");
         String definition = Helper.scan.nextLine();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getValue().toLowerCase().contains(definition.toLowerCase())) {
-                System.out.println(entry.getKey());
-            }
-        }
+        map.entrySet().stream().filter((entry) -> (entry.getValue().toLowerCase().contains(definition.toLowerCase()))).forEachOrdered((entry) -> {
+            System.out.println(entry.getKey());
+        });
     }
 
     @Override
@@ -228,7 +240,7 @@ public final class SlagWord implements ISlagWord {
     @Override
     public void Reset() {
         this.map.clear();
-        ReadSlagWordFromFile();
+        ReadSlagWordFromFile(fileName);
     }
 
     @Override
@@ -244,7 +256,7 @@ public final class SlagWord implements ISlagWord {
 
     @Override
     public void QuizOne() {
-        List<String> answers = new ArrayList<String>();
+        List<String> answers = new ArrayList<>();
         String correctAnswer;
         System.out.println("Chao mung ban den voi game show!!");
         System.out.println("Chon definition dung cho slag word sau : ");
@@ -271,14 +283,14 @@ public final class SlagWord implements ISlagWord {
             } else {
                 System.out.println("Chia buon cung ban da tra loi sai!");
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println("Chia buon cung ban da tra loi sai!");
         }
     }
 
     @Override
     public void QuizTwo() {
-        List<String> answers = new ArrayList<String>();
+        List<String> answers = new ArrayList<>();
         String correctAnswer;
         System.out.println("Chao mung ban den voi game show!!");
         System.out.println("Chon slag word dung cho definition sau : ");
@@ -305,7 +317,7 @@ public final class SlagWord implements ISlagWord {
             } else {
                 System.out.println("Chia buon cung ban da tra loi sai!");
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println("Chia buon cung ban da tra loi sai!");
         }
     }
@@ -385,5 +397,4 @@ public final class SlagWord implements ISlagWord {
         } catch (IOException ex) {
         }
     }
-
 }
